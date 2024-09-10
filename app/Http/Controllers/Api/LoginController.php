@@ -39,7 +39,7 @@ class LoginController extends Controller
             $token = PersonalAccessToken::where('tokenable_id', $id)->first();
             if (!$token) {
                 return response()->json([
-                    'status' => false,
+                    'status' => 404,
                     'message' => 'Usuário não possui token de acesso.',
                 ], 404);
             }
@@ -47,13 +47,13 @@ class LoginController extends Controller
             $id->tokens()->delete();
 
             return response()->json([
-                'status' => true,
+                'status' => 200,
                 'message' => 'Usuário deslogado com sucesso!',
             ]);
 
         } catch (Exception $e) {
             return response()->json([
-                'status' => false,
+                'status' => 500,
                 'message' => 'Erro ao deslogar usuário!',
                 'error' => $e
             ], 500);
